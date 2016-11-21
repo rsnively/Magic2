@@ -17,6 +17,7 @@ public class GameView extends View
     private BattlefieldView battlefieldView;
     private ManaPoolView manaPoolView;
     private StackView stackView;
+    private GameOverView gameOverView;
 
     public GameView(Rect r) {
         super(r);
@@ -30,6 +31,8 @@ public class GameView extends View
         battlefieldView = new BattlefieldView(GetBattlefieldRect(), Game.Get().GetPlayer1().GetPermanents(), Game.Get().GetPlayer2().GetPermanents());
         manaPoolView = new ManaPoolView(GetManaPoolRect(), Game.Get().GetPlayer1().GetManaPool());
         stackView = new StackView(GetStackViewRect(), Game.Get().GetStack());
+        if (Game.Get().IsOver())
+            gameOverView = new GameOverView(GetGameOverRect(), Game.Get().GetPlayer1().LostGame() ? false : true);
     }
 
     private Rect GetControlPanelRect() {
@@ -66,6 +69,11 @@ public class GameView extends View
         return Rect.RectTopRight(topRight, size);
     }
 
+    private Rect GetGameOverRect() {
+        Size s = new Size(200, 100);
+        return Rect.RectCenter(GetRect().GetCenter(), s);
+    }
+
     @Override
     protected ArrayList<View> GetSubviews() {
         ArrayList<View> views = new ArrayList<>();
@@ -75,6 +83,7 @@ public class GameView extends View
         views.add(controlPanel);
         if (!Game.Get().GetPlayer1().GetManaPool().Empty()) views.add(manaPoolView);
         views.add(stackView);
+        if (Game.Get().IsOver()) views.add(gameOverView);
         return views;
     }
 }

@@ -54,6 +54,8 @@ public class Game {
     public Player GetNonActivePlayer() { return phase.GetActivePlayer() ? p2 : p1;}
     public Stack GetStack() { return stack; }
 
+    public boolean IsOver() { return p1.LostGame() || p2.LostGame(); }
+
     public void AdvancePhase() {
         do {
             if (phase.GetName() == Phase.Name.Untap) {

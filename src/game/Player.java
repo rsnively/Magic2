@@ -6,6 +6,7 @@ import java.util.Collections;
 public class Player {
 
     private boolean playedFirst;
+    private boolean lost;
 
     private int life;
     private int landsPlayedThisTurn;
@@ -19,6 +20,7 @@ public class Player {
 
     public Player(boolean playedFirst) {
         this.playedFirst = playedFirst;
+        this.lost = false;
         this.life = 20;
         this.landsPlayedThisTurn = 0;
 
@@ -46,6 +48,8 @@ public class Player {
     }
 
     public boolean PlayedFirst() { return playedFirst; }
+    public boolean LostGame() { return lost; }
+    public void DeclareLoser() { lost = true; }
     public int GetLifeTotal() { return life; }
     public int LandsPlayedThisTurn() { return landsPlayedThisTurn; }
     public void IncrementLandsPlayed() { landsPlayedThisTurn++; }
@@ -59,7 +63,8 @@ public class Player {
 
     public void DealDamage(int damage) {
         life -= damage;
-        // todo check if lost
+        if (life <= 0)
+            DeclareLoser();
     }
 
     public void AddMana(Mana m) {
@@ -79,7 +84,7 @@ public class Player {
             hand.add(library.remove(0));
 
         if (library.size() == 0 && amount > 0)
-            ; //todo MILL
+            DeclareLoser();
     }
 
     public void UntapPermanents() {

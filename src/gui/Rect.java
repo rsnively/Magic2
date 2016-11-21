@@ -29,8 +29,9 @@ public class Rect
     public int GetCenterX() { return GetLeft() + GetWidth() / 2; }
 
     public Point GetTopLeft() { return origin; }
-    public Point GetTopCenter() { return origin.Add(new Point(GetWidth() / 2, 0)); }
-    public Point GetBottomCenter() { return origin.Add(new Point(GetWidth() / 2, GetHeight())); }
+    public Point GetTopCenter() { return new Point(GetCenterX(), GetTop()); }
+    public Point GetCenter() { return new Point(GetCenterX(), GetCenterY()); }
+    public Point GetBottomCenter() { return new Point(GetCenterX(), GetBottom()); }
     // Might need GetTopRight, GetTopCenter, GetLeftCenter, GetCenter ...
 
     public boolean Contains(Point p) {
