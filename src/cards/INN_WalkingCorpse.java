@@ -2,21 +2,15 @@ package cards;
 
 import game.Cost;
 import game.Player;
-import game.Spell;
+import game.Creature;
 
-public class INN_WalkingCorpse extends Spell {
+public class INN_WalkingCorpse extends Creature {
 
     public INN_WalkingCorpse(Player owner) {
-        super(owner, "Walking Corpse");
-        AddType(Type.Creature);
+        super(owner, "Walking Corpse", 2, 2);
         AddSubtype(Subtype.Zombie);
     }
 
     @Override
     public Cost GetCost() { return new Cost("1B"); }
-
-    @Override
-    public void Resolve() {
-        GetOwner().GetPermanents().add(this);
-    }
 }
