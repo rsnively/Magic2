@@ -87,7 +87,34 @@ public class Mana {
         this.black -= other.black;
         this.red -= other.red;
         this.green -= other.green;
-        this.colorless -= other.colorless;
+
+        // todo let player choose
+        while (other.colorless > 0) {
+            if (this.colorless > 0) {
+                this.colorless--;
+                other.colorless--;
+            }
+            else if (this.white > 0) {
+                this.white--;
+                other.colorless--;
+            }
+            else if (this.blue > 0) {
+                this.blue--;
+                other.colorless--;
+            }
+            else if (this.black > 0) {
+                this.black--;
+                other.colorless--;
+            }
+            else if (this.red > 0) {
+                this.red--;
+                other.colorless--;
+            }
+            else if (this.green > 0) {
+                this.green--;
+                other.colorless--;
+            }
+        }
     }
 
     public void AddMana(String mana) {
