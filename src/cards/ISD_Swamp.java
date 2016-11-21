@@ -4,10 +4,10 @@ import game.Land;
 import game.Mana;
 import game.Player;
 
-public class INN_Swamp extends Land {
+public class ISD_Swamp extends Land {
 
-    public INN_Swamp(Player owner) {
-        super(owner, "Swamp");
+    public ISD_Swamp(Player owner) {
+        super("ISD", owner, "Swamp");
         AddSupertype(Supertype.Basic);
         AddSubtype(Subtype.Swamp);
     }

@@ -6,6 +6,8 @@ import game.Phase;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
+import java.awt.Image;
+import javax.swing.ImageIcon;
 
 public class CardView extends View {
 
@@ -34,8 +36,15 @@ public class CardView extends View {
 
         g.setColor(Color.BLACK);
         g.drawString(card.GetName(), GetRect().GetLeft(), GetRect().GetTop()+12);
-        if (!card.IsBasicLand())
+        if (!card.IsLand())
             g.drawString(card.GetCost().GetMana().ToString(), GetRect().GetRight() - 20, GetRect().GetTop() + 12);
+
+        Image art = new ImageIcon(card.GetCardArtImageFile()).getImage();
+        g.drawImage(art, GetRect().GetLeft() + (GetRect().GetWidth() - art.getWidth(null)) / 2 , GetRect().GetTop() + 20, null);
+
+        if (card.IsCreature())
+            g.drawString(Integer.toString(card.GetPower()) + "/" + Integer.toString(card.GetToughness()), GetRect().GetRight() - 25, GetRect().GetBottom() - 3);
+
     }
 
     @Override

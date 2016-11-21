@@ -8,7 +8,7 @@ import game.Player;
 public class Rory extends Spell {
 
     public Rory(Player owner) {
-        super(owner, "Rory");
+        super("NONE", owner, "Rory");
     }
 
     @Override

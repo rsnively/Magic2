@@ -1,7 +1,7 @@
 package game;
 
-import cards.INN_Swamp;
-import cards.INN_WalkingCorpse;
+import cards.ISD_Swamp;
+import cards.ISD_WalkingCorpse;
 
 import gui.MainView;
 
@@ -20,17 +20,17 @@ public class Game {
         p1 = new Player(true);
         ArrayList<Card> deck1 = new ArrayList<>();
         for (int i = 0; i < 20; i++) {
-            deck1.add(new INN_Swamp(p1));
+            deck1.add(new ISD_Swamp(p1));
         }
         for (int i = 0; i < 40; i++) {
-            deck1.add(new INN_WalkingCorpse(p1));
+            deck1.add(new ISD_WalkingCorpse(p1));
         }
         p1.SetDeck(deck1);
 
         p2 = new Player(false);
         ArrayList<Card> deck2 = new ArrayList<>();
         for (int i = 0; i < 60; i++) {
-            deck2.add(new INN_WalkingCorpse(p2));
+            deck2.add(new ISD_WalkingCorpse(p2));
         }
         p2.SetDeck(deck2);
 

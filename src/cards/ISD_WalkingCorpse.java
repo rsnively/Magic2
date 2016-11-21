@@ -4,10 +4,10 @@ import game.Cost;
 import game.Player;
 import game.Creature;
 
-public class INN_WalkingCorpse extends Creature {
+public class ISD_WalkingCorpse extends Creature {
 
-    public INN_WalkingCorpse(Player owner) {
-        super(owner, "Walking Corpse", 2, 2);
+    public ISD_WalkingCorpse(Player owner) {
+        super("ISD", owner, "Walking Corpse", 2, 2);
         AddSubtype(Subtype.Zombie);
     }
 

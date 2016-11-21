@@ -2,8 +2,8 @@ package game;
 
 public abstract class Spell extends Card {
 
-    public Spell(Player owner, String name) {
-        super(owner, name);
+    public Spell(String set, Player owner, String name) {
+        super(set, owner, name);
     }
 
     @Override

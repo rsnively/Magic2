@@ -4,6 +4,8 @@ import game.Effect;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
+import java.awt.Image;
+import javax.swing.ImageIcon;
 
 public class EffectView extends View {
 
@@ -21,5 +23,8 @@ public class EffectView extends View {
 
         g.setColor(Color.BLACK);
         g.drawString(effect.GetEffectDescription(), GetRect().GetLeft(), GetRect().GetTop()+12);
+
+        Image image = new ImageIcon(effect.GetEffectImageFile()).getImage();
+        g.drawImage(image, GetRect().GetLeft() + (GetRect().GetWidth() - image.getWidth(null)) / 2 , GetRect().GetTop() + 20, null);
     }
 }

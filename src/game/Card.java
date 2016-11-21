@@ -7,6 +7,10 @@ public abstract class Card implements Effect {
     public enum Supertype { Basic }
     public enum Subtype { Swamp, Zombie }
 
+    private String set;
+    public String GetFullCardImageFile() { return "res/card/" + set + "/full/" + name + ".full.jpg"; }
+    public String GetCardArtImageFile() { return "res/card/" + set + "/art/" + name + ".art.jpg"; }
+
     private Player owner;
     private String name;
 
@@ -18,7 +22,8 @@ public abstract class Card implements Effect {
     private boolean tapped;
     private boolean attacking;
 
-    public Card(Player owner, String name) {
+    public Card(String set, Player owner, String name) {
+        this.set = set;
         this.owner = owner;
         this.name = name;
         types = new ArrayList<>();
@@ -45,13 +50,20 @@ public abstract class Card implements Effect {
     public boolean IsTapped() { return tapped; }
 
     public String GetEffectDescription() { return name; }
+    public String GetEffectImageFile() { return GetCardArtImageFile(); }
 
     public void AddAbility(Ability ability) { abilities.add(ability); }
     public void AddType(Type type) { types.add(type); }
     public void AddSupertype(Supertype supertype) { supertypes.add(supertype); }
     public void AddSubtype(Subtype subtype) { subtypes.add(subtype); }
 
-    public boolean IsBasicLand() { return types.contains(Type.Land) && supertypes.contains(Supertype.Basic); }
+    public boolean Is(Type t) { return types.contains(t); }
+    public boolean Is(Supertype t) { return supertypes.contains(t); }
+    public boolean Is(Subtype t) { return subtypes.contains(t); }
+    public boolean IsBasicLand() { return Is(Supertype.Basic) && Is(Type.Land); }
+    public boolean IsCreature() { return Is(Type.Creature); }
+    public boolean IsLand() { return Is(Type.Land); }
+
     public boolean HasSummoningSickness() { return false; }
     public void RemoveSummoningSickness() {}
 

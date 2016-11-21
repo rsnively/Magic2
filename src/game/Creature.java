@@ -6,8 +6,8 @@ public abstract class Creature extends Spell {
     private int toughness;
     private boolean summoningSickness;
 
-    public Creature(Player owner, String name, int power, int toughness) {
-        super(owner, name);
+    public Creature(String set, Player owner, String name, int power, int toughness) {
+        super(set, owner, name);
         this.power = power;
         this.toughness = toughness;
         this.summoningSickness = false;
