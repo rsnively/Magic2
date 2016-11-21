@@ -20,6 +20,19 @@ public class CardView extends View {
 
     public Card GetCard() { return card; }
 
+    private String GetTypelineString() {
+        String typeString = "";
+        for (Card.Supertype t : card.GetSupertypes())
+            typeString += t.toString() + " ";
+        for (Card.Type t : card.GetTypes())
+            typeString += t.toString() + " ";
+        if (!card.GetSubtypes().isEmpty())
+            typeString += "- ";
+        for (Card.Subtype t : card.GetSubtypes())
+            typeString += t.toString() + " ";
+        return typeString;
+    }
+
     @Override
     protected void Render(Graphics2D g) {
         if (card.CanPlay() || card.CanAttack()) {
@@ -35,12 +48,14 @@ public class CardView extends View {
         DrawBorder(g, Color.BLACK);
 
         g.setColor(Color.BLACK);
-        g.drawString(card.GetName(), GetRect().GetLeft(), GetRect().GetTop()+12);
+        g.drawString(card.GetName(), GetRect().GetLeft() + 5, GetRect().GetTop()+12);
         if (!card.IsLand())
             g.drawString(card.GetCost().GetMana().ToString(), GetRect().GetRight() - 20, GetRect().GetTop() + 12);
 
         Image art = new ImageIcon(card.GetCardArtImageFile()).getImage();
         g.drawImage(art, GetRect().GetLeft() + (GetRect().GetWidth() - art.getWidth(null)) / 2 , GetRect().GetTop() + 20, null);
+
+        g.drawString(GetTypelineString(), GetRect().GetLeft() + 5, GetRect().GetTop() + art.getHeight(null) + 30);
 
         if (card.IsCreature())
             g.drawString(Integer.toString(card.GetPower()) + "/" + Integer.toString(card.GetToughness()), GetRect().GetRight() - 25, GetRect().GetBottom() - 3);

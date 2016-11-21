@@ -37,6 +37,11 @@ public abstract class Card implements Effect {
 
     public Player GetOwner() { return owner; }
     public String GetName() { return name; }
+
+    public ArrayList<Supertype> GetSupertypes() { return supertypes; }
+    public ArrayList<Type> GetTypes() { return types; }
+    public ArrayList<Subtype> GetSubtypes() { return subtypes; }
+
     public int GetPower() { return 0; }
     public int GetToughness() { return 0; }
 
