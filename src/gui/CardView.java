@@ -2,6 +2,7 @@ package gui;
 
 import game.Card;
 import game.Game;
+import game.Mana;
 import game.Phase;
 
 import java.awt.Color;
@@ -19,6 +20,15 @@ public class CardView extends View {
     }
 
     public Card GetCard() { return card; }
+
+    private Color GetBackgroundColor() {
+        if (card.Is(Mana.Color.White) || card.Is(Card.Subtype.Plains)) return Color.WHITE;
+        if (card.Is(Mana.Color.Blue) || card.Is(Card.Subtype.Island)) return Color.CYAN.darker();
+        if (card.Is(Mana.Color.Black) || card.Is(Card.Subtype.Swamp)) return Color.GRAY;
+        if (card.Is(Mana.Color.Red) || card.Is(Card.Subtype.Mountain)) return Color.RED.darker();
+        if (card.Is(Mana.Color.Green) || card.Is(Card.Subtype.Forest)) return Color.GREEN.darker();
+        return Color.GRAY.brighter().brighter();
+    }
 
     private String GetTypelineString() {
         String typeString = "";
@@ -44,7 +54,7 @@ public class CardView extends View {
             g.fillRect(GetRect().GetLeft() - 1, GetRect().GetTop() - 1, GetRect().GetWidth() + 3, GetRect().GetHeight() + 3);
         }
 
-        SetBackground(g, Color.GRAY);
+        SetBackground(g, GetBackgroundColor());
         DrawBorder(g, Color.BLACK);
 
         g.setColor(Color.BLACK);

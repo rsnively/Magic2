@@ -1,5 +1,7 @@
 package game;
 
+import cards.ISD_ArmoredSkaab;
+import cards.ISD_Island;
 import cards.ISD_Swamp;
 import cards.ISD_WalkingCorpse;
 
@@ -19,10 +21,10 @@ public class Game {
     private Game() {
         p1 = new Player(true);
         ArrayList<Card> deck1 = new ArrayList<>();
-        for (int i = 0; i < 20; i++) {
+        for (int i = 0; i < 15; i++) {
             deck1.add(new ISD_Swamp(p1));
-        }
-        for (int i = 0; i < 40; i++) {
+            deck1.add(new ISD_Island(p1));
+            deck1.add(new ISD_ArmoredSkaab(p1));
             deck1.add(new ISD_WalkingCorpse(p1));
         }
         p1.SetDeck(deck1);

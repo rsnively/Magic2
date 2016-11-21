@@ -5,7 +5,7 @@ import java.util.ArrayList;
 public abstract class Card implements Effect {
     public enum Type { Creature, Land }
     public enum Supertype { Basic }
-    public enum Subtype { Swamp, Zombie }
+    public enum Subtype { Forest, Island, Mountain, Plains, Swamp, Warrior, Zombie }
 
     private String set;
     public String GetFullCardImageFile() { return "res/card/" + set + "/full/" + name + ".full.jpg"; }
@@ -65,6 +65,7 @@ public abstract class Card implements Effect {
     public boolean Is(Type t) { return types.contains(t); }
     public boolean Is(Supertype t) { return supertypes.contains(t); }
     public boolean Is(Subtype t) { return subtypes.contains(t); }
+    public boolean Is(Mana.Color c) { return false; }
     public boolean IsBasicLand() { return Is(Supertype.Basic) && Is(Type.Land); }
     public boolean IsCreature() { return Is(Type.Creature); }
     public boolean IsLand() { return Is(Type.Land); }

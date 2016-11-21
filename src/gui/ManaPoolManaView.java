@@ -23,11 +23,11 @@ public class ManaPoolManaView extends View {
                 DrawBorder(g, Color.BLACK);
                 break;
             case Blue:
-                SetBackground(g, Color.BLUE);
+                SetBackground(g, Color.CYAN.darker());
                 DrawBorder(g, Color.BLACK);
                 break;
             case Black:
-                SetBackground(g, Color.BLACK);
+                SetBackground(g, Color.GRAY);
                 DrawBorder(g, Color.WHITE);
                 break;
             case Red:

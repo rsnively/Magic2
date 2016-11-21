@@ -7,6 +7,11 @@ public abstract class Spell extends Card {
     }
 
     @Override
+    public boolean Is(Mana.Color c) {
+        return GetCost().GetMana().HasColor(c);
+    }
+
+    @Override
     public boolean UsesStack() { return true; }
 
     @Override

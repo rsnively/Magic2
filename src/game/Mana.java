@@ -54,6 +54,18 @@ public class Mana {
     public int GetGreen() { return green; }
     public int GetColorless() { return colorless; }
 
+    public boolean HasColor(Color c) {
+        switch (c) {
+            case White: return white > 0;
+            case Blue: return blue > 0;
+            case Black: return black > 0;
+            case Red: return red > 0;
+            case Green: return green > 0;
+            case Colorless: return true;
+            default: return false;
+        }
+    }
+
     public int Convert() {
         return white + blue + black + red + green + colorless;
     }
