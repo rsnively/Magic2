@@ -2,6 +2,7 @@ package gui;
 
 import game.Card;
 import game.Game;
+import game.Phase;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
@@ -19,8 +20,12 @@ public class CardView extends View {
 
     @Override
     protected void Render(Graphics2D g) {
-        if (card.CanPlay()) {
+        if (card.CanPlay() || card.CanAttack()) {
             g.setColor(Color.ORANGE.darker());
+            g.fillRect(GetRect().GetLeft() - 1, GetRect().GetTop() - 1, GetRect().GetWidth() + 3, GetRect().GetHeight() + 3);
+        }
+        if (card.IsAttacking()) {
+            g.setColor(Color.RED);
             g.fillRect(GetRect().GetLeft() - 1, GetRect().GetTop() - 1, GetRect().GetWidth() + 3, GetRect().GetHeight() + 3);
         }
 
@@ -41,6 +46,14 @@ public class CardView extends View {
         else if (card.CanActivate()) {
             // todo popup for multiple abilities
             card.ActivateAbility(0);
+        }
+        else if (card.CanAttack()) {
+            card.SetAttacking(true);
+            MakeDirty();
+        }
+        else if (card.IsAttacking() && Game.Get().GetPhase().GetName() == Phase.Name.Attack) {
+            card.SetAttacking(false);
+            MakeDirty();
         }
     }
 }

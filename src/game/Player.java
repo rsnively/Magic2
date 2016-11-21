@@ -57,6 +57,11 @@ public class Player {
 
     public void ShuffleLibrary() { Collections.shuffle(this.library); }
 
+    public void DealDamage(int damage) {
+        life -= damage;
+        // todo check if lost
+    }
+
     public void AddMana(Mana m) {
         manaPool.Add(m);
     }
@@ -80,5 +85,29 @@ public class Player {
     public void UntapPermanents() {
         for (Card c : permanents)
             c.Untap();
+    }
+
+    public void TapAttackers() {
+        for (Card c : permanents)
+            if (c.IsAttacking())
+                c.Tap();
+    }
+
+    public void ResetAttackers() {
+        for (Card c : permanents)
+            c.SetAttacking(false);
+    }
+
+    public int GetAttackerDamage() {
+        int damage = 0;
+        for (Card c: permanents)
+            if (c.IsAttacking())
+                damage += c.GetPower();
+        return damage;
+    }
+
+    public void RemoveSummoningSickness() {
+        for (Card c : permanents)
+            c.RemoveSummoningSickness();
     }
 }

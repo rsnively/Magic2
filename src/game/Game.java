@@ -58,14 +58,27 @@ public class Game {
         do {
             if (phase.GetName() == Phase.Name.Untap) {
                 GetActivePlayer().UntapPermanents();
+                GetActivePlayer().RemoveSummoningSickness();
             }
 
-            if (phase.GetName() == Phase.Name.Draw) {
+            else if (phase.GetName() == Phase.Name.Draw) {
                 if (!(GetActivePlayer().PlayedFirst() && phase.GetTurnNumber() == 1))
                     GetActivePlayer().DrawCards(1);
             }
 
-            if (phase.GetName() == Phase.Name.End) {
+            else if (phase.GetName() == Phase.Name.Attack) {
+                GetActivePlayer().TapAttackers();
+            }
+
+            else if (phase.GetName() == Phase.Name.Damage) {
+                GetNonActivePlayer().DealDamage(GetActivePlayer().GetAttackerDamage());
+            }
+
+            else if (phase.GetName() == Phase.Name.EndCombat) {
+                GetActivePlayer().ResetAttackers();
+            }
+
+            else if (phase.GetName() == Phase.Name.End) {
                 // todo is this true or only on your/their turn? (ie GetActivePlayer().ResetLandsPlayed())
                 p1.ResetLandsPlayed();
                 p2.ResetLandsPlayed();
