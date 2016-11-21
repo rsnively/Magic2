@@ -36,6 +36,7 @@ public abstract class Creature extends Spell {
     public boolean CanAttack() {
         return !IsTapped()
                 && Game.Get().GetPhase().GetName() == Phase.Name.Attack
+                && GetOwner().IsActivePlayer()
                 && !IsAttacking()
                 && IsOnBattlefield()
                 && !HasSummoningSickness();
