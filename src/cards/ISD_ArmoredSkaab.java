@@ -18,7 +18,7 @@ public class ISD_ArmoredSkaab extends Creature {
                                         new Trigger(Trigger.Type.EntersBattlefield)) {
                                         @Override
                                         public void Resolve() {
-                                            GetOwner().DrawCards(1);
+                                            GetOwner().Mill(4);
                                         }
         });
     }

@@ -87,6 +87,11 @@ public class Player {
             DeclareLoser();
     }
 
+    public void Mill(int amount) {
+        for ( ; amount > 0 && library.size() > 0; amount--)
+            graveyard.add(library.remove(0));
+    }
+
     public void UntapPermanents() {
         for (Card c : permanents)
             c.Untap();
