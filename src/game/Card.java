@@ -58,6 +58,8 @@ public abstract class Card implements Effect {
     public String GetEffectImageFile() { return GetCardArtImageFile(); }
 
     public void AddAbility(Ability ability) { abilities.add(ability); }
+    public ArrayList<Ability> GetAbilities() { return abilities; }
+    public ArrayList<TriggeredAbility> GetTriggeredAbilities() { ArrayList<TriggeredAbility> as = new ArrayList<>(); for (Ability a : abilities) if (a.IsTriggeredAbility()) as.add((TriggeredAbility)a); return as; }
     public void AddType(Type type) { types.add(type); }
     public void AddSupertype(Supertype supertype) { supertypes.add(supertype); }
     public void AddSubtype(Subtype subtype) { subtypes.add(subtype); }

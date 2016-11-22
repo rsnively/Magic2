@@ -113,4 +113,9 @@ public class Game {
             ability.Resolve();
         MainView.Update();
     }
+
+    public void AbilityTriggered(Ability ability) {
+        stack.AddEffect(ability);
+        MainView.Update();
+    }
 }

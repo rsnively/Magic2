@@ -12,6 +12,9 @@ public class ManaAbility extends ActivatedAbility {
     }
 
     @Override
+    public boolean IsManaAbility() { return true; }
+
+    @Override
     public boolean UsesStack() { return false; }
 
     @Override

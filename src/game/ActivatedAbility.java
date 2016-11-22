@@ -9,6 +9,9 @@ public abstract class ActivatedAbility extends Ability {
     }
 
     @Override
+    public boolean IsActivatedAbility() { return true; }
+
+    @Override
     public boolean CanActivate() {
         return cost.CouldPay();
     }

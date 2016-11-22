@@ -30,6 +30,7 @@ public abstract class Creature extends Spell {
     public void Resolve() {
         summoningSickness = true;
         GetOwner().GetPermanents().add(this);
+        Trigger.EntersTheBattlefield(this);
     }
 
     @Override
