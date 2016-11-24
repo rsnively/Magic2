@@ -5,8 +5,8 @@ import java.awt.EventQueue;
 
 public class Application extends JFrame
 {
-    public static int WindowWidth = 1800;
-    public static int WindowHeight = 1200;
+    public static int WindowWidth = 1280;
+    public static int WindowHeight = 750;
 
     public Application() {
         setTitle("Magic: the Gathering Simulator");

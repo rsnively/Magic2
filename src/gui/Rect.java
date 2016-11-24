@@ -28,11 +28,15 @@ public class Rect
     public int GetCenterY() { return GetTop() + GetHeight() / 2; }
     public int GetCenterX() { return GetLeft() + GetWidth() / 2; }
 
-    public Point GetTopLeft() { return origin; }
+    public Point GetTopLeft() { return new Point(GetLeft(), GetTop()); }
     public Point GetTopCenter() { return new Point(GetCenterX(), GetTop()); }
+    public Point GetTopRight() { return new Point(GetRight(), GetTop()); }
+    public Point GetLeftCenter() { return new Point(GetLeft(), GetCenterY()); }
     public Point GetCenter() { return new Point(GetCenterX(), GetCenterY()); }
+    public Point GetRightCenter() { return new Point(GetRight(), GetCenterY()); }
+    public Point GetBottomLeft() { return new Point(GetLeft(), GetBottom()); }
     public Point GetBottomCenter() { return new Point(GetCenterX(), GetBottom()); }
-    // Might need GetTopRight, GetTopCenter, GetLeftCenter, GetCenter ...
+    public Point GetBottomRight() { return new Point(GetRight(), GetBottom()); }
 
     public boolean Contains(Point p) {
         return p.GetX() > GetLeft()

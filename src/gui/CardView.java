@@ -63,12 +63,16 @@ public class CardView extends View {
             g.drawString(card.GetCost().GetMana().ToString(), GetRect().GetRight() - 20, GetRect().GetTop() + 12);
 
         Image art = new ImageIcon(card.GetCardArtImageFile()).getImage();
-        g.drawImage(art, GetRect().GetLeft() + (GetRect().GetWidth() - art.getWidth(null)) / 2 , GetRect().GetTop() + 20, null);
+        int imageWidth = GetRect().GetWidth() * 19 / 20;
+        int imageHeight = imageWidth * 5 / 7;
+        int imageX = GetRect().GetLeft() + (GetRect().GetWidth() - imageWidth) / 2;
+        int imageY = GetRect().GetTop() + GetRect().GetHeight() / 20;
+        g.drawImage(art, imageX, imageY, imageWidth, imageHeight,null);
 
-        g.drawString(GetTypelineString(), GetRect().GetLeft() + 5, GetRect().GetTop() + art.getHeight(null) + 30);
+        g.drawString(GetTypelineString(), GetRect().GetLeft() + 5,imageY + imageHeight + 15);
 
         if (card.IsCreature())
-            g.drawString(Integer.toString(card.GetPower()) + "/" + Integer.toString(card.GetToughness()), GetRect().GetRight() - 25, GetRect().GetBottom() - 3);
+            g.drawString(Integer.toString(card.GetPower()) + "/" + Integer.toString(card.GetToughness()), GetRect().GetRight() - 25, GetRect().GetBottom() - 20);
 
     }
 

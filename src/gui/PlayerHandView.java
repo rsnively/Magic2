@@ -19,14 +19,15 @@ public class PlayerHandView extends View {
     }
 
     private Rect GetCardRect(int i) {
-        int x = (GameView.CardWidth + 5) * i;
-        if (hand.size() > 0)
-            x = Math.min(x, GetRect().GetWidth() / hand.size() * i);
-        x += GetRect().GetLeft();
-        int y = GetRect().GetTop() + 3;
+        int cardHeight = GetRect().GetHeight() * 19 / 20;
+        int cardWidth = cardHeight * 5 / 7;
+        Size s = new Size(cardWidth, cardHeight);
+
+        int x = GetRect().GetLeft() + i * cardWidth * 21 / 20;
+        int y = GetRect().GetTop() + (GetRect().GetHeight() - cardHeight) / 2;
         Point topLeft = new Point(x, y);
-        Size size = new Size(GameView.CardWidth, GameView.CardHeight);
-        return Rect.RectTopLeft(topLeft, size);
+
+        return Rect.RectTopLeft(topLeft, s);
     }
 
     @Override

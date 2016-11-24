@@ -10,6 +10,10 @@ public class Point
         this.y = y;
     }
 
+    public Point(int x, double y) { this(x, (int) y); }
+    public Point(double x, int y) { this((int) x, y); }
+    public Point(double x, double y) { this((int) x, (int) y); }
+
     public int GetX() { return x; }
     public int GetY() { return y; }
 

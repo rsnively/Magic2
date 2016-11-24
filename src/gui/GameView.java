@@ -36,25 +36,25 @@ public class GameView extends View
     }
 
     private Rect GetControlPanelRect() {
-        return Rect.RectTopLeft(GetRect().GetTopLeft(), new Size(200, GetRect().GetHeight()));
+        return Rect.RectTopLeft(GetRect().GetTopLeft(), new Size(GetRect().GetWidth() * 0.16, GetRect().GetHeight()));
     }
 
     private Rect GetPlayerHandRect() {
-        Point topLeft = new Point(GetControlPanelRect().GetRight(), (int) (GetRect().GetHeight() * 0.75));
-        Size size = new Size(GetRect().GetWidth() - GetControlPanelRect().GetWidth(), (int) (GetRect().GetHeight() * 0.25));
-        return Rect.RectTopLeft(topLeft, size);
+        Point bottomRight = new Point(GetRect().GetRight(), GetRect().GetBottom());
+        Size size = new Size(GetRect().GetWidth() - GetControlPanelRect().GetWidth(), GetRect().GetHeight() * 0.32);
+        return Rect.RectBottomRight(bottomRight, size);
     }
 
     private Rect GetPhaseViewRect() {
-        Point topLeft = new Point(GetControlPanelRect().GetRight(), (int) (GetRect().GetHeight() * 0.7));
-        Size size = new Size(GetRect().GetWidth() - GetControlPanelRect().GetWidth(), (int) (GetRect().GetHeight() * 0.05));
-        return Rect.RectTopLeft(topLeft, size);
+        Point bottomRight = new Point(GetRect().GetRight(), GetPlayerHandRect().GetTop());
+        Size size = new Size(GetRect().GetWidth() - GetControlPanelRect().GetWidth(), GetRect().GetHeight() * 0.04);
+        return Rect.RectBottomRight(bottomRight, size);
     }
 
     private Rect GetBattlefieldRect() {
-        Point topLeft = new Point(GetControlPanelRect().GetRight(), 0);
-        Size size = new Size(GetRect().GetWidth() - GetControlPanelRect().GetWidth(), (int) (GetRect().GetHeight() * 0.7));
-        return Rect.RectTopLeft(topLeft, size);
+        Point topRight = new Point(GetRect().GetRight(), GetRect().GetTop());
+        Size size = new Size(GetRect().GetWidth() - GetControlPanelRect().GetWidth(), GetRect().GetHeight() - GetPlayerHandRect().GetHeight() - GetPhaseViewRect().GetHeight());
+        return Rect.RectTopRight(topRight, size);
     }
 
     private Rect GetManaPoolRect() {
