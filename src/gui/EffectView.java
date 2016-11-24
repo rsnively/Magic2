@@ -25,6 +25,9 @@ public class EffectView extends View {
         g.drawString(effect.GetEffectDescription(), GetRect().GetLeft(), GetRect().GetTop()+12);
 
         Image image = new ImageIcon(effect.GetEffectImageFile()).getImage();
-        g.drawImage(image, GetRect().GetLeft() + (GetRect().GetWidth() - image.getWidth(null)) / 2 , GetRect().GetTop() + 20, null);
-    }
+        double imageWidth = GetRect().GetWidth() * 0.95;
+        double imageHeight = imageWidth * CardView.WHRatio;
+        double imageX = GetRect().GetLeft() + (GetRect().GetWidth() - imageWidth) / 2;
+        double imageY = GetRect().GetTop() + GetRect().GetHeight() * 0.1;
+        g.drawImage(image, (int)imageX, (int)imageY, (int)imageWidth, (int)imageHeight,null);    }
 }

@@ -22,19 +22,27 @@ public class BattlefieldView extends View {
     }
 
     private Rect GetBottomPermanentRect(int i, Card c) {
-        //todo spacing, positioning
-        int x = GetRect().GetLeft() + ((int) ((float) (GameView.CardWidth) * (((float) (i)) + 0.5)));
-        int y = GetRect().GetHeight() / 2 + GameView.CardHeight / 2;
-        Size s = c.IsTapped() ? GameView.TappedCardSize : GameView.CardSize;
-        return Rect.RectCenter(new Point(x, y), s);
+        double cardHeight = GetRect().GetHeight() * 0.95 / 2;
+        double cardWidth = cardHeight * CardView.WHRatio;
+        Size s = new Size(c.IsTapped() ? cardHeight : cardWidth, c.IsTapped() ? cardWidth : cardHeight);
+
+        double x = GetRect().GetLeft() + i * cardWidth * 1.05;
+        double y = GetRect().GetBottom() - (GetRect().GetHeight() / 2 - cardHeight) / 2;
+        Point bottomLeft = new Point(x, y);
+
+        return Rect.RectBottomLeft(bottomLeft, s);
     }
 
     private Rect GetTopPermanentRect(int i, Card c) {
-        //todo spacing, positioning
-        int x = GetRect().GetLeft() + ((int) ((float) (GameView.CardWidth) * (((float) (i)) + 0.5)));
-        int y = GetRect().GetTop() + GameView.CardHeight / 2;
-        Size s = c.IsTapped() ? GameView.TappedCardSize : GameView.CardSize;
-        return Rect.RectCenter(new Point(x, y), s);
+        double cardHeight = GetRect().GetHeight() * 0.95 / 2;
+        double cardWidth = cardHeight * CardView.WHRatio;
+        Size s = new Size(c.IsTapped() ? cardHeight : cardWidth, c.IsTapped() ? cardWidth : cardHeight);
+
+        double x = GetRect().GetLeft() + i * cardWidth * 1.05;
+        double y = GetRect().GetTop() + (GetRect().GetHeight() / 2 - cardHeight) / 2;
+        Point topLeft = new Point(x, y);
+
+        return Rect.RectTopLeft(topLeft, s);
     }
 
     @Override

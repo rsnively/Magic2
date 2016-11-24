@@ -6,11 +6,6 @@ import java.util.ArrayList;
 
 public class GameView extends View
 {
-    public static int CardWidth = 190;
-    public static int CardHeight = 266;
-    public static Size CardSize = new Size(CardWidth, CardHeight);
-    public static Size TappedCardSize = new Size(CardHeight, CardWidth);
-
     private ControlPanelView controlPanel;
     private PlayerHandView playerHandView;
     private PhaseView phaseView;

@@ -19,12 +19,12 @@ public class PlayerHandView extends View {
     }
 
     private Rect GetCardRect(int i) {
-        int cardHeight = GetRect().GetHeight() * 19 / 20;
-        int cardWidth = cardHeight * 5 / 7;
+        double cardHeight = GetRect().GetHeight() * 0.95;
+        double cardWidth = cardHeight * CardView.WHRatio;
         Size s = new Size(cardWidth, cardHeight);
 
-        int x = GetRect().GetLeft() + i * cardWidth * 21 / 20;
-        int y = GetRect().GetTop() + (GetRect().GetHeight() - cardHeight) / 2;
+        double x = GetRect().GetLeft() + i * cardWidth * 1.05;
+        double y = GetRect().GetTop() + (GetRect().GetHeight() - cardHeight) / 2;
         Point topLeft = new Point(x, y);
 
         return Rect.RectTopLeft(topLeft, s);

@@ -25,11 +25,15 @@ public class StackView extends View {
     }
 
     private Rect GetEffectRect(int i) {
-        int x = GetRect().GetRight() - (int) (GameView.CardWidth * i * 0.75);
-        int y = GetRect().GetTop() + 10;
+        double cardHeight = GetRect().GetHeight() * 0.95;
+        double cardWidth = cardHeight * CardView.WHRatio;
+        Size s = new Size(cardWidth, cardHeight);
+
+        double x = GetRect().GetRight() - cardWidth * i * 0.75;
+        double y = GetRect().GetTop() + (GetRect().GetHeight() - cardHeight) / 2;
         Point topRight = new Point(x, y);
-        Size size = new Size(GameView.CardWidth, GameView.CardHeight);
-        return Rect.RectTopRight(topRight, size);
+
+        return Rect.RectTopRight(topRight, s);
     }
 
     private Rect GetOkayButtonRect() {

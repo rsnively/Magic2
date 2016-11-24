@@ -12,6 +12,8 @@ import javax.swing.ImageIcon;
 
 public class CardView extends View {
 
+    public static final double WHRatio = 0.71;
+
     private Card card;
 
     public CardView(Rect r, Card c) {
@@ -63,13 +65,13 @@ public class CardView extends View {
             g.drawString(card.GetCost().GetMana().ToString(), GetRect().GetRight() - 20, GetRect().GetTop() + 12);
 
         Image art = new ImageIcon(card.GetCardArtImageFile()).getImage();
-        int imageWidth = GetRect().GetWidth() * 19 / 20;
-        int imageHeight = imageWidth * 5 / 7;
-        int imageX = GetRect().GetLeft() + (GetRect().GetWidth() - imageWidth) / 2;
-        int imageY = GetRect().GetTop() + GetRect().GetHeight() / 20;
-        g.drawImage(art, imageX, imageY, imageWidth, imageHeight,null);
+        double imageWidth = GetRect().GetWidth() * 0.95;
+        double imageHeight = imageWidth * CardView.WHRatio;
+        double imageX = GetRect().GetLeft() + (GetRect().GetWidth() - imageWidth) / 2;
+        double imageY = GetRect().GetTop() + GetRect().GetHeight() * 0.05;
+        g.drawImage(art, (int)imageX, (int)imageY, (int)imageWidth, (int)imageHeight,null);
 
-        g.drawString(GetTypelineString(), GetRect().GetLeft() + 5,imageY + imageHeight + 15);
+        g.drawString(GetTypelineString(), GetRect().GetLeft() + 5,(int) (imageY + imageHeight + 15));
 
         if (card.IsCreature())
             g.drawString(Integer.toString(card.GetPower()) + "/" + Integer.toString(card.GetToughness()), GetRect().GetRight() - 25, GetRect().GetBottom() - 20);
