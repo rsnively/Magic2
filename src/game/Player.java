@@ -89,6 +89,10 @@ public class Player {
         costRemaining = Optional.of(new Cost(c.GetCost()));
     }
 
+    public void RemoveManaFromPool(Mana m) {
+        manaPool.Remove(m);
+    }
+
     public void EmptyManaPool() {
         manaPool = new Mana();
     }

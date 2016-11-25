@@ -1,5 +1,6 @@
 package gui;
 
+import game.Game;
 import game.Mana;
 
 import java.awt.Color;
@@ -41,5 +42,14 @@ public class ManaPoolManaView extends View {
         }
 
         DrawStringCentered(g, Integer.toString(amount));
+    }
+
+    @Override
+    protected void Clicked(Click click) {
+        if (Game.Get().GetCostBeingPaid().GetManaCost().CouldUse(new Mana(color))) {
+            Game.Get().GetPlayer1().RemoveManaFromPool(new Mana(color));
+            Game.Get().GetPlayer1().AddMana(new Mana(color));
+            MakeDirty();
+        }
     }
 }
