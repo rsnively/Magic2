@@ -114,6 +114,12 @@ public class Game {
         }
     }
 
+    public void Uncast() {
+        assert(CostsBeingPaid());
+        p1.StopCasting();
+        MainView.Update();
+    }
+
     public void PlayCard(Card card) {
         card.GetOwner().GetHand().remove(card);
         if (card.UsesStack())

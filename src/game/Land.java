@@ -5,7 +5,7 @@ public abstract class Land extends Card {
     public Land(String set, Player owner, String name, Cost cost) {
         super(set, owner, name, cost);
 
-        AddAbility(new ManaAbility(new Cost(this), new Mana(ColorProduced()), owner));
+        AddAbility(new ManaAbility(new Cost(this), new Mana(ColorProduced()), this, owner));
         AddType(Type.Land);
     }
 

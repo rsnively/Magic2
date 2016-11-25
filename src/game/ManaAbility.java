@@ -2,12 +2,14 @@ package game;
 
 public class ManaAbility extends ActivatedAbility {
 
-    public Mana mana;
-    public Player controller;
+    private Mana mana;
+    private Card source;
+    private Player controller;
 
-    public ManaAbility(Cost c, Mana mana, Player controller) {
+    public ManaAbility(Cost c, Mana mana, Card source, Player controller) {
         super(c);
         this.mana = mana;
+        this.source = source;
         this.controller = controller;
     }
 
@@ -30,7 +32,7 @@ public class ManaAbility extends ActivatedAbility {
 
     @Override
     public void Resolve() {
-        controller.AddMana(mana);
+        controller.AddMana(mana ,source);
     }
 
     // todo deactivate to untap and remove mana

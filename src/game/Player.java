@@ -8,8 +8,7 @@ public class Player {
 
     private boolean playedFirst;
     private boolean lost;
-    private Optional<Card> cardBeingCast;
-    private Optional<Cost> costRemaining;
+    private Optional<SpellCast> spellCast;
 
     private int life;
     private int landsPlayedThisTurn;
@@ -24,8 +23,7 @@ public class Player {
     public Player(boolean playedFirst) {
         this.playedFirst = playedFirst;
         this.lost = false;
-        this.cardBeingCast = Optional.empty();
-        this.costRemaining = Optional.empty();
+        this.spellCast = Optional.empty();
         this.life = 20;
         this.landsPlayedThisTurn = 0;
 
@@ -68,26 +66,35 @@ public class Player {
             DeclareLoser();
     }
 
-    public void AddMana(Mana m) {
-        if (cardBeingCast.isPresent() && costRemaining.get().GetManaCost().CouldUse(m)) {
-            costRemaining.get().Pay(m);
-            if (costRemaining.get().Paid()) {
-                Game.Get().PlayCard(cardBeingCast.get());
-                cardBeingCast = Optional.empty();
-                costRemaining = Optional.empty();
-            }
+    public void AddManaFromPool(Mana mana) {
+        spellCast.get().PayFromPool(mana);
+        CheckIfCanCast();
+    }
+
+    public void AddMana(Mana mana, Card source) {
+        if (spellCast.isPresent() && spellCast.get().CouldUse(mana)) {
+            spellCast.get().PayFromSource(mana, source);
+            CheckIfCanCast();
         }
         else
-            manaPool.Add(m);
+            manaPool.Add(mana);
     }
 
-    public boolean IsPayingCosts() { return cardBeingCast.isPresent(); }
-    public Cost GetCostBeingPaid() { return cardBeingCast.isPresent() && costRemaining.isPresent() ? costRemaining.get() : new Cost(); }
-
-    public void PayFor(Card c) {
-        cardBeingCast = Optional.of(c);
-        costRemaining = Optional.of(new Cost(c.GetCost()));
+    private void CheckIfCanCast() {
+        if (spellCast.get().Paid()) {
+            Game.Get().PlayCard(spellCast.get().GetCard());
+            spellCast = Optional.empty();
+        }
     }
+
+    public void StopCasting() {
+        spellCast.get().Undo();
+        spellCast = Optional.empty();
+    }
+
+    public boolean IsPayingCosts() { return spellCast.isPresent(); }
+    public Cost GetCostBeingPaid() { return spellCast.isPresent() ? spellCast.get().GetCostRemaining() : new Cost(); }
+    public void PayFor(Card c) { spellCast = Optional.of(new SpellCast(c, this)); }
 
     public void RemoveManaFromPool(Mana m) {
         manaPool.Remove(m);

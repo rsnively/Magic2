@@ -48,7 +48,7 @@ public class ManaPoolManaView extends View {
     protected void Clicked(Click click) {
         if (Game.Get().GetCostBeingPaid().GetManaCost().CouldUse(new Mana(color))) {
             Game.Get().GetPlayer1().RemoveManaFromPool(new Mana(color));
-            Game.Get().GetPlayer1().AddMana(new Mana(color));
+            Game.Get().GetPlayer1().AddManaFromPool(new Mana(color));
             MakeDirty();
         }
     }

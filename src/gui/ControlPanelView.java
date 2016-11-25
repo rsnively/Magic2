@@ -2,15 +2,24 @@ package gui;
 
 import game.Game;
 import game.Phase;
-import game.Stack;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
+import java.util.ArrayList;
 
 public class ControlPanelView extends View {
 
+    private UndoButtonView undoButton;
+
     public ControlPanelView(Rect r) {
         super(r);
+        undoButton = new UndoButtonView(GetUndoButtonRect());
+    }
+
+    private Rect GetUndoButtonRect() {
+        Point bottomCenter = new Point(GetRect().GetCenterX(), GetRect().GetHeight() * 0.9);
+        Size s = new Size(50, 30);
+        return Rect.RectBottomCenter(bottomCenter, s);
     }
 
     private String GetDialogString(Phase p) {
@@ -54,11 +63,22 @@ public class ControlPanelView extends View {
         g.setColor(Color.BLACK);
         g.drawString(GetDialogString(Game.Get().GetPhase()), GetRect().GetLeft(), GetRect().GetCenterY());
         g.drawString("Click when done", GetRect().GetLeft(), GetRect().GetCenterY() + 20); //todo buttons for yes/no/okay
+
+        super.Render(g);
     }
 
     @Override
     protected void Clicked(Click c) {
-        if (!Game.Get().GetStack().HasEffects() && !Game.Get().CostsBeingPaid())
+        if (Game.Get().CostsBeingPaid())
+            super.Clicked(c);
+        else if (!Game.Get().GetStack().HasEffects() && !Game.Get().CostsBeingPaid())
             Game.Get().AdvancePhase();
+    }
+
+    @Override
+    protected ArrayList<View> GetSubviews() {
+        ArrayList<View> views = new ArrayList<>();
+        if (Game.Get().CostsBeingPaid()) views.add(undoButton);
+        return views;
     }
 }
