@@ -80,8 +80,11 @@ public class CardView extends View {
 
     @Override
     protected void Clicked(Click c) {
-        if (card.CanPlay() && card.GetOwner().CanAfford(card)) {
-            Game.Get().PlayCard(card);
+        if (card.CanPlay()) {
+            if (!card.UsesStack())
+                Game.Get().PlayCard(card);
+            else
+                Game.Get().CastSpell(card);
         }
         else if (card.CanActivate()) {
             // todo popup for multiple abilities

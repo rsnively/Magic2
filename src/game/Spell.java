@@ -19,6 +19,7 @@ public abstract class Spell extends Card {
         return GetOwner().IsActivePlayer()
                 && IsInHand()
                 && (Game.Get().GetPhase().GetName() == Phase.Name.Main1 ||  Game.Get().GetPhase().GetName() == Phase.Name.Main2)
+                && !Game.Get().CostsBeingPaid()
                 && !Game.Get().GetStack().HasEffects();
     }
 }

@@ -38,4 +38,9 @@ public class Cost {
             c.Tap();
     }
 
+    public void Pay(Mana m) {
+        manaCost.Remove(m);
+    }
+
+    public boolean Paid() { return manaCost.Convert() == 0 && tapCost.isEmpty(); }
 }

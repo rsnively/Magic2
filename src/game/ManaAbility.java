@@ -18,6 +18,9 @@ public class ManaAbility extends ActivatedAbility {
     public boolean UsesStack() { return false; }
 
     @Override
+    public boolean CanActivate() { return true; }
+
+    @Override
     public void Activate() {
         cost.Pay();
     }

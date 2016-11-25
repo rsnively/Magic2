@@ -39,6 +39,7 @@ public abstract class Creature extends Spell {
                 && Game.Get().GetPhase().GetName() == Phase.Name.Attack
                 && GetOwner().IsActivePlayer()
                 && !IsAttacking()
+                && !Game.Get().CostsBeingPaid()
                 && IsOnBattlefield()
                 && !HasSummoningSickness();
     }

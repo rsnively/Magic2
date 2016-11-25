@@ -54,6 +54,16 @@ public class Game {
     public Player GetPlayer2() { return p2; }
     public Player GetActivePlayer() { return phase.GetActivePlayer() ? p1 : p2; }
     public Player GetNonActivePlayer() { return phase.GetActivePlayer() ? p2 : p1;}
+
+    public boolean CostsBeingPaid() { return p1.IsPayingCosts() || p2.IsPayingCosts(); }
+    public Cost GetCostBeingPaid() {
+        if (p1.IsPayingCosts())
+            return p1.GetCostBeingPaid();
+        if (p2.IsPayingCosts())
+            return p2.GetCostBeingPaid();
+        return new Cost();
+    }
+
     public Stack GetStack() { return stack; }
 
     public boolean IsOver() { return p1.LostGame() || p2.LostGame(); }
@@ -95,9 +105,17 @@ public class Game {
         MainView.Update();
     }
 
+    public void CastSpell(Card card) {
+        if (card.GetCost().GetMana().Convert() == 0)
+            PlayCard(card);
+        else {
+            card.GetOwner().PayFor(card);
+            MainView.Update();
+        }
+    }
+
     public void PlayCard(Card card) {
         card.GetOwner().GetHand().remove(card);
-        card.GetOwner().RemoveMana(card.GetCost().GetMana());
         if (card.UsesStack())
             stack.AddEffect(card);
         else

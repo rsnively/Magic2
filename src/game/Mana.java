@@ -94,11 +94,36 @@ public class Mana {
     }
 
     public void Remove(Mana other) {
-        this.white -= other.white;
-        this.blue -= other.blue;
-        this.black -= other.black;
-        this.red -= other.red;
-        this.green -= other.green;
+        if (this.white >= other.white)
+            this.white -= other.white;
+        else {
+            this.colorless -= (other.white - this.white);
+            this.white = 0;
+        }
+        if (this.blue >= other.blue)
+            this.blue -= other.blue;
+        else {
+            this.colorless -= (other.blue - this.blue);
+            this.blue = 0;
+        }
+        if (this.black >= other.black)
+            this.black -= other.black;
+        else {
+            this.colorless -= (other.black - this.black);
+            this.black = 0;
+        }
+        if (this.red >= other.red)
+            this.red -= other.red;
+        else {
+            this.colorless -= (other.red - this.red);
+            this.red = 0;
+        }
+        if (this.green >= other.green)
+            this.green -= other.green;
+        else {
+            this.colorless -= (other.green - this.green);
+            this.green = 0;
+        }
 
         // todo let player choose
         while (other.colorless > 0) {
@@ -146,6 +171,15 @@ public class Mana {
                 && this.red >= other.red
                 && this.green >= other.green
                 && this.Convert() >= other.Convert();
+    }
+
+    public boolean CouldUse(Mana other) {
+        return this.colorless > 0
+                || this.white > 0 && other.white > 0
+                || this.blue > 0 && other.blue > 0
+                || this.black > 0 && other.black > 0
+                || this.red > 0 && other.red > 0
+                || this.green > 0 && other.green > 0;
     }
 
     public boolean Empty() { return this.Convert() == 0; }

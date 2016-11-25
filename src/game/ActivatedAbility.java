@@ -13,7 +13,8 @@ public abstract class ActivatedAbility extends Ability {
 
     @Override
     public boolean CanActivate() {
-        return cost.CouldPay();
+        return !Game.Get().CostsBeingPaid()
+                && cost.CouldPay();
     }
 
     @Override

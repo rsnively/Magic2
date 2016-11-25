@@ -2,11 +2,14 @@ package game;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Optional;
 
 public class Player {
 
     private boolean playedFirst;
     private boolean lost;
+    private Optional<Card> cardBeingCast;
+    private Optional<Cost> costRemaining;
 
     private int life;
     private int landsPlayedThisTurn;
@@ -21,6 +24,8 @@ public class Player {
     public Player(boolean playedFirst) {
         this.playedFirst = playedFirst;
         this.lost = false;
+        this.cardBeingCast = Optional.empty();
+        this.costRemaining = Optional.empty();
         this.life = 20;
         this.landsPlayedThisTurn = 0;
 
@@ -55,10 +60,6 @@ public class Player {
     public void IncrementLandsPlayed() { landsPlayedThisTurn++; }
     public void ResetLandsPlayed() { landsPlayedThisTurn = 0;}
 
-    public boolean CanAfford(Card c) {
-        return manaPool.Covers(c.GetCost().GetMana());
-    }
-
     public void ShuffleLibrary() { Collections.shuffle(this.library); }
 
     public void DealDamage(int damage) {
@@ -68,11 +69,24 @@ public class Player {
     }
 
     public void AddMana(Mana m) {
-        manaPool.Add(m);
+        if (cardBeingCast.isPresent() && costRemaining.get().GetMana().CouldUse(m)) {
+            costRemaining.get().Pay(m);
+            if (costRemaining.get().Paid()) {
+                Game.Get().PlayCard(cardBeingCast.get());
+                cardBeingCast = Optional.empty();
+                costRemaining = Optional.empty();
+            }
+        }
+        else
+            manaPool.Add(m);
     }
 
-    public void RemoveMana(Mana m) {
-        manaPool.Remove(m);
+    public boolean IsPayingCosts() { return cardBeingCast.isPresent(); }
+    public Cost GetCostBeingPaid() { return cardBeingCast.isPresent() && costRemaining.isPresent() ? costRemaining.get() : new Cost(); }
+
+    public void PayFor(Card c) {
+        cardBeingCast = Optional.of(c);
+        costRemaining = Optional.of(c.GetCost());
     }
 
     public void EmptyManaPool() {

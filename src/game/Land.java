@@ -23,7 +23,8 @@ public abstract class Land extends Card {
                 && IsInHand()
                 && GetOwner().LandsPlayedThisTurn() == 0
                 && (Game.Get().GetPhase().GetName() == Phase.Name.Main1
-                        || Game.Get().GetPhase().GetName() == Phase.Name.Main2);
+                        || Game.Get().GetPhase().GetName() == Phase.Name.Main2)
+                && !Game.Get().CostsBeingPaid();
     }
 
     @Override
