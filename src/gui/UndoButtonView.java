@@ -11,7 +11,6 @@ public class UndoButtonView extends View {
 
     @Override
     protected void Render(Graphics2D g) {
-        System.out.println("drawing");
         SetBackground(g, Color.BLACK);
         g.setColor(Color.WHITE);
         DrawStringCentered(g, "UNDO");
