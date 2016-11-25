@@ -62,7 +62,7 @@ public class CardView extends View {
         g.setColor(Color.BLACK);
         g.drawString(card.GetName(), GetRect().GetLeft() + 5, GetRect().GetTop()+12);
         if (!card.IsLand())
-            g.drawString(card.GetCost().GetMana().ToString(), GetRect().GetRight() - 20, GetRect().GetTop() + 12);
+            g.drawString(card.GetCost().GetManaCost().ToString(), GetRect().GetRight() - 20, GetRect().GetTop() + 12);
 
         Image art = new ImageIcon(card.GetCardArtImageFile()).getImage();
         double imageWidth = GetRect().GetWidth() * 0.95;

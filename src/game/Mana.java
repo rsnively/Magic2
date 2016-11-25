@@ -1,32 +1,38 @@
 package game;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class Mana {
 
-    public enum Color { White, Blue, Black, Red, Green, Colorless }
+    public enum Color { White, Blue, Black, Red, Green }
 
-    private int white, blue, black, red, green, colorless;
+    private Map<Color, Integer> colors;
 
-    public Mana(String cost) {
-        white = 0;
-        blue = 0;
-        black = 0;
-        red = 0;
-        green = 0;
-        colorless = 0;
+    public Mana(String mana) {
+        colors = new HashMap<>();
+        for (Color c : Color.values())
+            colors.put(c, 0);
 
-        cost = cost.toUpperCase();
-        for (int i = 0; i < cost.length(); i++) {
-            char c = cost.charAt(i);
-
-            if (Character.isDigit(c)) {
-                colorless *= 10;
-                colorless += Character.getNumericValue(c);
+        mana = mana.toUpperCase();
+        for (int i = 0; i < mana.length(); i++) {
+            switch (mana.charAt(i)) {
+                case 'W':
+                    Add(Color.White);
+                    break;
+                case 'U':
+                    Add(Color.Blue);
+                    break;
+                case 'B':
+                    Add(Color.Black);
+                    break;
+                case 'R':
+                    Add(Color.Red);
+                    break;
+                case 'G':
+                    Add(Color.Green);
+                    break;
             }
-            else if (c == 'W') white++;
-            else if (c == 'U') blue++;
-            else if (c == 'B') black++;
-            else if (c == 'R') red++;
-            else if (c == 'G') green++;
         }
     }
 
@@ -36,123 +42,45 @@ public class Mana {
 
     public Mana(Color c) {
         this("");
-        switch (c) {
-            case White: white++; break;
-            case Blue: blue++; break;
-            case Black: black++; break;
-            case Red: red++; break;
-            case Green: green++; break;
-            case Colorless: colorless++; break;
-            default: System.out.println("Don't recognize mana color " + c.toString());
-        }
+        Add(c);
     }
 
-    public int GetWhite() { return white; }
-    public int GetBlue() { return blue; }
-    public int GetBlack() { return black; }
-    public int GetRed() { return red; }
-    public int GetGreen() { return green; }
-    public int GetColorless() { return colorless; }
-
-    public boolean HasColor(Color c) {
-        switch (c) {
-            case White: return white > 0;
-            case Blue: return blue > 0;
-            case Black: return black > 0;
-            case Red: return red > 0;
-            case Green: return green > 0;
-            case Colorless: return true;
-            default: return false;
-        }
-    }
+    public int Get(Color c) { return colors.get(c); }
+    public boolean Has(Color c) { return colors.get(c) > 0; }
 
     public int Convert() {
-        return white + blue + black + red + green + colorless;
+        int sum = 0;
+        for (Color c : Color.values())
+            sum += Get(c);
+        return sum;
+    }
+
+    public static String GetString(Mana.Color c) {
+        switch (c) {
+            case White: return "W";
+            case Blue: return "U";
+            case Black: return "B";
+            case Red: return "R";
+            case Green: return "G";
+        }
+        return "????";
     }
 
     public String ToString() {
         String s = "";
-        if (colorless > 0) s += Integer.toString(colorless);
-        if (white > 0) s += "W";
-        if (blue > 0) s += "U";
-        if (black > 0) s += "B";
-        if (red > 0) s += "R";
-        if (green > 0) s += "G";
+        for (Color c : Color.values())
+            for (int i = 0; i < Get(c); i++)
+                s += GetString(c);
 
         if (s.isEmpty())
             return "0";
         return s;
     }
 
-    public void Add(Mana other) {
-        this.white += other.white;
-        this.blue += other.blue;
-        this.black += other.black;
-        this.red += other.red;
-        this.green += other.green;
-        this.colorless += other.colorless;
-    }
-
-    public void Remove(Mana other) {
-        if (this.white >= other.white)
-            this.white -= other.white;
-        else {
-            this.colorless -= (other.white - this.white);
-            this.white = 0;
-        }
-        if (this.blue >= other.blue)
-            this.blue -= other.blue;
-        else {
-            this.colorless -= (other.blue - this.blue);
-            this.blue = 0;
-        }
-        if (this.black >= other.black)
-            this.black -= other.black;
-        else {
-            this.colorless -= (other.black - this.black);
-            this.black = 0;
-        }
-        if (this.red >= other.red)
-            this.red -= other.red;
-        else {
-            this.colorless -= (other.red - this.red);
-            this.red = 0;
-        }
-        if (this.green >= other.green)
-            this.green -= other.green;
-        else {
-            this.colorless -= (other.green - this.green);
-            this.green = 0;
-        }
-
-        // todo let player choose
-        while (other.colorless > 0) {
-            if (this.colorless > 0) {
-                this.colorless--;
-                other.colorless--;
-            }
-            else if (this.white > 0) {
-                this.white--;
-                other.colorless--;
-            }
-            else if (this.blue > 0) {
-                this.blue--;
-                other.colorless--;
-            }
-            else if (this.black > 0) {
-                this.black--;
-                other.colorless--;
-            }
-            else if (this.red > 0) {
-                this.red--;
-                other.colorless--;
-            }
-            else if (this.green > 0) {
-                this.green--;
-                other.colorless--;
-            }
-        }
-    }
+    public void Add(Mana.Color color) { colors.replace(color, colors.get(color) + 1); }
+    public void Remove(Mana.Color color) { colors.replace(color, colors.get(color) - 1); }
+    public void Add(Mana other) { for (Color c : Color.values()) colors.replace(c, colors.get(c) + other.Get(c));}
+    public void Remove(Mana other) { for (Color c : Color.values()) colors.replace(c, colors.get(c) - other.Get(c)); }
 
     public void AddMana(String mana) {
         Mana other = new Mana(mana);
@@ -164,22 +92,11 @@ public class Mana {
         this.Remove(other);
     }
 
-    public boolean Covers(Mana other) {
-        return this.white >= other.white
-                && this.blue >= other.blue
-                && this.black >= other.black
-                && this.red >= other.red
-                && this.green >= other.green
-                && this.Convert() >= other.Convert();
-    }
-
     public boolean CouldUse(Mana other) {
-        return this.colorless > 0
-                || this.white > 0 && other.white > 0
-                || this.blue > 0 && other.blue > 0
-                || this.black > 0 && other.black > 0
-                || this.red > 0 && other.red > 0
-                || this.green > 0 && other.green > 0;
+        for (Color c : Color.values())
+            if (Get(c) > 0 && other.Get(c) > 0)
+                return true;
+        return false;
     }
 
     public boolean Empty() { return this.Convert() == 0; }

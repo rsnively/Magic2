@@ -14,12 +14,9 @@ public class ManaPoolView extends View {
         super(r);
 
         manaViews = new ArrayList<>();
-        if (mana.GetWhite() > 0) manaViews.add(new ManaPoolManaView(GetManaViewRect(manaViews.size()), Mana.Color.White, mana.GetWhite()));
-        if (mana.GetBlue() > 0) manaViews.add(new ManaPoolManaView(GetManaViewRect(manaViews.size()), Mana.Color.Blue, mana.GetBlue()));
-        if (mana.GetBlack() > 0) manaViews.add(new ManaPoolManaView(GetManaViewRect(manaViews.size()), Mana.Color.Black, mana.GetBlack()));
-        if (mana.GetRed() > 0) manaViews.add(new ManaPoolManaView(GetManaViewRect(manaViews.size()), Mana.Color.Red, mana.GetRed()));
-        if (mana.GetGreen() > 0) manaViews.add(new ManaPoolManaView(GetManaViewRect(manaViews.size()), Mana.Color.Green, mana.GetGreen()));
-        if (mana.GetColorless() > 0) manaViews.add(new ManaPoolManaView(GetManaViewRect(manaViews.size()), Mana.Color.Colorless, mana.GetColorless()));
+        for (Mana.Color c : Mana.Color.values())
+            if (mana.Has(c))
+                manaViews.add(new ManaPoolManaView(GetManaViewRect(manaViews.size()), c, mana.Get(c)));
     }
 
     private Rect GetManaViewRect(int i) {

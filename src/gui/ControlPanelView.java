@@ -15,7 +15,7 @@ public class ControlPanelView extends View {
 
     private String GetDialogString(Phase p) {
         if (Game.Get().CostsBeingPaid())
-            return "Pay " + Game.Get().GetCostBeingPaid().GetMana().ToString();
+            return "Pay " + Game.Get().GetCostBeingPaid().GetManaCost().ToString();
         switch (p.GetName()) {
             case Upkeep:
             case Untap:

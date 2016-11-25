@@ -9,7 +9,7 @@ import game.TriggeredAbility;
 public class ISD_ArmoredSkaab extends Creature {
 
     public ISD_ArmoredSkaab(Player owner) {
-        super("ISD", owner, "Armored Skaab", 1, 4);
+        super("ISD", owner, "Armored Skaab", new Cost("2U"), 1, 4);
         AddSubtype(Subtype.Zombie);
         AddSubtype(Subtype.Warrior);
 
@@ -22,9 +22,4 @@ public class ISD_ArmoredSkaab extends Creature {
                                         }
         });
     }
-
-    @Override
-    public Cost GetCost() { return new Cost("2U"); }
-
-    //todo triggered ability
 }

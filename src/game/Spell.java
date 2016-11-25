@@ -2,13 +2,13 @@ package game;
 
 public abstract class Spell extends Card {
 
-    public Spell(String set, Player owner, String name) {
-        super(set, owner, name);
+    public Spell(String set, Player owner, String name, Cost cost) {
+        super(set, owner, name, cost);
     }
 
     @Override
     public boolean Is(Mana.Color c) {
-        return GetCost().GetMana().HasColor(c);
+        return GetCost().GetManaCost().Has(c);
     }
 
     @Override

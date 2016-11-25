@@ -13,6 +13,7 @@ public abstract class Card implements Effect {
 
     private Player owner;
     private String name;
+    private Cost cost;
 
     private ArrayList<Type> types;
     private ArrayList<Supertype> supertypes;
@@ -22,10 +23,11 @@ public abstract class Card implements Effect {
     private boolean tapped;
     private boolean attacking;
 
-    public Card(String set, Player owner, String name) {
+    public Card(String set, Player owner, String name, Cost cost) {
         this.set = set;
         this.owner = owner;
         this.name = name;
+        this.cost = cost;
         types = new ArrayList<>();
         supertypes = new ArrayList<>();
         subtypes = new ArrayList<>();
@@ -37,6 +39,7 @@ public abstract class Card implements Effect {
 
     public Player GetOwner() { return owner; }
     public String GetName() { return name; }
+    public Cost GetCost() { return cost; }
 
     public ArrayList<Supertype> GetSupertypes() { return supertypes; }
     public ArrayList<Type> GetTypes() { return types; }
@@ -88,7 +91,6 @@ public abstract class Card implements Effect {
         Game.Get().AbilityActivated(abilities.get(i));
     }
 
-    public abstract Cost GetCost();
     public abstract boolean UsesStack();
     public boolean CanPlay() { return false; }
     public boolean CanAttack() { return false; }

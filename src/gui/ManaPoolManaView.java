@@ -38,10 +38,6 @@ public class ManaPoolManaView extends View {
                 SetBackground(g, Color.GREEN);
                 DrawBorder(g, Color.BLACK);
                 break;
-            case Colorless:
-                SetBackground(g, Color.GRAY);
-                DrawBorder(g, Color.BLACK);
-                break;
         }
 
         DrawStringCentered(g, Integer.toString(amount));

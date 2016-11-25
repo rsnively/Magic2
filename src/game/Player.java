@@ -69,7 +69,7 @@ public class Player {
     }
 
     public void AddMana(Mana m) {
-        if (cardBeingCast.isPresent() && costRemaining.get().GetMana().CouldUse(m)) {
+        if (cardBeingCast.isPresent() && costRemaining.get().GetManaCost().CouldUse(m)) {
             costRemaining.get().Pay(m);
             if (costRemaining.get().Paid()) {
                 Game.Get().PlayCard(cardBeingCast.get());
@@ -86,7 +86,7 @@ public class Player {
 
     public void PayFor(Card c) {
         cardBeingCast = Optional.of(c);
-        costRemaining = Optional.of(c.GetCost());
+        costRemaining = Optional.of(new Cost(c.GetCost()));
     }
 
     public void EmptyManaPool() {

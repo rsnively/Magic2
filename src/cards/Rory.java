@@ -8,14 +8,11 @@ import game.Player;
 public class Rory extends Spell {
 
     public Rory(Player owner) {
-        super("NONE", owner, "Rory");
+        super("NONE", owner, "Rory", new Cost());
     }
 
     @Override
     public void Resolve() {
         System.out.println("Rory resolves");
     }
-
-    @Override
-    public Cost GetCost() { return new Cost(); }
 }

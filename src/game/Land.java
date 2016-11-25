@@ -2,8 +2,8 @@ package game;
 
 public abstract class Land extends Card {
 
-    public Land(String set, Player owner, String name) {
-        super(set, owner, name);
+    public Land(String set, Player owner, String name, Cost cost) {
+        super(set, owner, name, cost);
 
         AddAbility(new ManaAbility(new Cost(this), new Mana(ColorProduced()), owner));
         AddType(Type.Land);

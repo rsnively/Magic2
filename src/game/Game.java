@@ -106,7 +106,7 @@ public class Game {
     }
 
     public void CastSpell(Card card) {
-        if (card.GetCost().GetMana().Convert() == 0)
+        if (card.GetCost().GetManaCost().Convert() == 0)
             PlayCard(card);
         else {
             card.GetOwner().PayFor(card);

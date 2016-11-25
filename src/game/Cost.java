@@ -3,28 +3,32 @@ package game;
 import java.util.ArrayList;
 
 public class Cost {
-    public Mana manaCost;
+    public ManaCost manaCost;
     public ArrayList<Card> tapCost;
 
-    public Cost(Mana m, ArrayList<Card> cards) {
+    public Cost(ManaCost m, ArrayList<Card> cards) {
         this.manaCost = m;
         this.tapCost = cards;
     }
 
     public Cost() {
-        this(new Mana(), new ArrayList<>());
+        this(new ManaCost(), new ArrayList<>());
     }
 
     public Cost(String mana) {
-        this(new Mana(mana), new ArrayList<>());
+        this(new ManaCost(mana), new ArrayList<>());
     }
 
     public Cost(Card c) {
-        this(new Mana(), new ArrayList<>());
+        this(new ManaCost(), new ArrayList<>());
         this.tapCost.add(c);
     }
 
-    public Mana GetMana() { return manaCost; }
+    public Cost(Cost other) {
+        this(new ManaCost(other.manaCost), new ArrayList<>(other.tapCost));
+    }
+
+    public ManaCost GetManaCost() { return manaCost; }
 
     public boolean CouldPay() {
         for (Card c : tapCost)
@@ -39,8 +43,8 @@ public class Cost {
     }
 
     public void Pay(Mana m) {
-        manaCost.Remove(m);
+        manaCost.Pay(m);
     }
 
-    public boolean Paid() { return manaCost.Convert() == 0 && tapCost.isEmpty(); }
+    public boolean Paid() { return manaCost.Paid() && tapCost.isEmpty(); }
 }
