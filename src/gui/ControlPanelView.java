@@ -9,11 +9,29 @@ import java.util.ArrayList;
 
 public class ControlPanelView extends View {
 
+    private GameView gameView;
+    private GraveyardButton player1GraveyardButton;
+    private GraveyardButton player2GraveyardButton;
     private UndoButtonView undoButton;
 
-    public ControlPanelView(Rect r) {
+    public ControlPanelView(Rect r, GameView gameView) {
         super(r);
+        this.gameView = gameView;
+        player1GraveyardButton = new GraveyardButton(GetPlayer1GraveyardButtonRect(), 1, gameView);
+        player2GraveyardButton = new GraveyardButton(GetPlayer2GraveyardButtonRect(), 2, gameView);
         undoButton = new UndoButtonView(GetUndoButtonRect());
+    }
+
+    private Rect GetPlayer1GraveyardButtonRect() {
+        Size s = new Size(GetRect().GetWidth() * 0.9, 30);
+        Point center = new Point(GetRect().GetCenterX(), GetRect().GetHeight() * 0.7);
+        return Rect.RectCenter(center, s);
+    }
+
+    private Rect GetPlayer2GraveyardButtonRect() {
+        Size s = new Size(GetRect().GetWidth() * 0.9, 30);
+        Point center = new Point(GetRect().GetCenterX(), GetRect().GetHeight() * 0.8);
+        return Rect.RectCenter(center, s);
     }
 
     private Rect GetUndoButtonRect() {
@@ -69,7 +87,7 @@ public class ControlPanelView extends View {
 
     @Override
     protected void Clicked(Click c) {
-        if (Game.Get().CostsBeingPaid())
+        if (Game.Get().CostsBeingPaid() || player1GraveyardButton.OwnsClick(c) || player2GraveyardButton.OwnsClick(c))
             super.Clicked(c);
         else if (!Game.Get().GetStack().HasEffects() && !Game.Get().CostsBeingPaid())
             Game.Get().AdvancePhase();
@@ -78,6 +96,8 @@ public class ControlPanelView extends View {
     @Override
     protected ArrayList<View> GetSubviews() {
         ArrayList<View> views = new ArrayList<>();
+        views.add(player1GraveyardButton);
+        views.add(player2GraveyardButton);
         if (Game.Get().CostsBeingPaid()) views.add(undoButton);
         return views;
     }
