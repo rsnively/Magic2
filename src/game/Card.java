@@ -5,15 +5,16 @@ import java.util.ArrayList;
 public abstract class Card implements Effect {
     public enum Type { Creature, Land }
     public enum Supertype { Basic }
-    public enum Subtype { Forest, Island, Mountain, Plains, Swamp, Warrior, Zombie }
+    public enum Subtype { Forest, Horror, Island, Mountain, Plains, Swamp, Warrior, Zombie }
 
     private String set;
     public String GetFullCardImageFile() { return "res/card/" + set + "/full/" + name + ".full.jpg"; }
     public String GetCardArtImageFile() { return "res/card/" + set + "/art/" + name + ".art.jpg"; }
 
     private Player owner;
+    private CardZone zone;
     private String name;
-    private Cost cost;
+    protected Cost cost;
 
     private ArrayList<Type> types;
     private ArrayList<Supertype> supertypes;
@@ -26,6 +27,7 @@ public abstract class Card implements Effect {
     public Card(String set, Player owner, String name, Cost cost) {
         this.set = set;
         this.owner = owner;
+        this.zone = CardZone.Library;
         this.name = name;
         this.cost = cost;
         types = new ArrayList<>();
@@ -48,10 +50,8 @@ public abstract class Card implements Effect {
     public int GetPower() { return 0; }
     public int GetToughness() { return 0; }
 
-    public boolean IsInHand() { return owner.GetHand().contains(this); }
-    public boolean IsInLibrary() { return owner.GetLibrary().contains(this); }
-    public boolean IsOnBattlefield() { return owner.GetPermanents().contains(this); }
-    public boolean IsInGraveyard() { return owner.GetGraveyard().contains(this); }
+    public CardZone GetZone() { return zone; }
+    public void SetZone(CardZone zone ) { this.zone = zone; }
 
     public void Tap() { tapped = true; }
     public void Untap() { tapped = false; }
@@ -81,7 +81,7 @@ public abstract class Card implements Effect {
     public boolean CanActivate() {
         // todo multiple abilities
         for (Ability a : abilities)
-            if (IsOnBattlefield() && a.CanActivate()) // todo abilities from gy/exile/hand?
+            if (GetZone() == CardZone.Battlefield && a.CanActivate()) // todo abilities from gy/exile/hand?
                 return true;
         return false;
     }

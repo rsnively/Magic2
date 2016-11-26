@@ -30,6 +30,7 @@ public abstract class Creature extends Spell {
     public void Resolve() {
         summoningSickness = true;
         GetOwner().GetPermanents().add(this);
+        SetZone(CardZone.Battlefield);
         Trigger.EntersTheBattlefield(this);
     }
 
@@ -40,7 +41,7 @@ public abstract class Creature extends Spell {
                 && GetOwner().IsActivePlayer()
                 && !IsAttacking()
                 && !Game.Get().CostsBeingPaid()
-                && IsOnBattlefield()
+                && GetZone() == CardZone.Battlefield
                 && !HasSummoningSickness();
     }
 }

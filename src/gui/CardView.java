@@ -98,5 +98,11 @@ public class CardView extends View {
             card.SetAttacking(false);
             MakeDirty();
         }
+        else if (Game.Get().CostsBeingPaid()) {
+            if (Game.Get().GetCostBeingPaid().CouldPayTransferCost(card)) {
+                card.GetOwner().PayTransferCost(card);
+                MakeDirty();
+            }
+        }
     }
 }

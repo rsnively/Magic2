@@ -20,7 +20,7 @@ public abstract class Land extends Card {
     @Override
     public boolean CanPlay() {
         return GetOwner().IsActivePlayer()
-                && IsInHand()
+                && GetZone() == CardZone.Hand
                 && GetOwner().LandsPlayedThisTurn() == 0
                 && (Game.Get().GetPhase().GetName() == Phase.Name.Main1
                         || Game.Get().GetPhase().GetName() == Phase.Name.Main2)
@@ -30,6 +30,7 @@ public abstract class Land extends Card {
     @Override
     public void Resolve() {
         GetOwner().GetPermanents().add(this);
+        SetZone(CardZone.Battlefield);
         GetOwner().IncrementLandsPlayed();
     }
 

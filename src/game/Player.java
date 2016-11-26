@@ -17,6 +17,7 @@ public class Player {
     private ArrayList<Card> library;
     private ArrayList<Card> graveyard;
     private ArrayList<Card> permanents;
+    private ArrayList<Card> exile;
 
     private Mana manaPool;
 
@@ -31,6 +32,7 @@ public class Player {
         hand = new ArrayList<>();
         graveyard = new ArrayList<>();
         permanents = new ArrayList<>();
+        exile = new ArrayList<>();
 
         manaPool = new Mana();
     }
@@ -44,6 +46,7 @@ public class Player {
     public ArrayList<Card> GetLibrary() { return library; }
     public ArrayList<Card> GetPermanents() { return permanents; }
     public ArrayList<Card> GetGraveyard() { return graveyard; }
+    public ArrayList<Card> GetExile() { return exile; }
     public Mana GetManaPool() { return manaPool; }
 
     public boolean IsActivePlayer() {
@@ -80,6 +83,30 @@ public class Player {
             manaPool.Add(mana);
     }
 
+    public void PayTransferCost(Card c) {
+        assert(spellCast.isPresent());
+        TransferCost transferCost = spellCast.get().GetCostRemaining().GetTransferCost(c);
+
+        switch (transferCost.GetFrom()) {
+            case Library: library.remove(c); break;
+            case Hand: hand.remove(c); break;
+            case Stack: break;
+            case Battlefield: permanents.remove(c); break;
+            case Graveyard: graveyard.remove(c); break;
+            case Exile: exile.remove(c); break;
+        }
+        switch (transferCost.GetTo()) {
+            case Library: library.add(c); break;
+            case Hand: hand.add(c); break;
+            case Stack: break;
+            case Battlefield: permanents.add(c); break;
+            case Graveyard: graveyard.add(c); break;
+            case Exile: exile.add(c); break;
+        }
+        transferCost.Pay(c);
+        CheckIfCanCast();
+    }
+
     private void CheckIfCanCast() {
         if (spellCast.get().Paid()) {
             Game.Get().PlayCard(spellCast.get().GetCard());
@@ -105,16 +132,22 @@ public class Player {
     }
 
     public void DrawCards(int amount) {
-        for( ; amount > 0 && library.size() > 0; amount--)
-            hand.add(library.remove(0));
+        for( ; amount > 0 && library.size() > 0; amount--) {
+            Card c = library.remove(0);
+            c.SetZone(CardZone.Hand);
+            hand.add(c);
+        }
 
         if (library.size() == 0 && amount > 0)
             DeclareLoser();
     }
 
     public void Mill(int amount) {
-        for ( ; amount > 0 && library.size() > 0; amount--)
-            graveyard.add(library.remove(0));
+        for ( ; amount > 0 && library.size() > 0; amount--) {
+            Card c = library.remove(0);
+            c.SetZone(CardZone.Graveyard);
+            graveyard.add(c);
+        }
     }
 
     public void UntapPermanents() {

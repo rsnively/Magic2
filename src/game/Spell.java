@@ -17,9 +17,15 @@ public abstract class Spell extends Card {
     @Override
     public boolean CanPlay() {
         return GetOwner().IsActivePlayer()
-                && IsInHand()
+                && GetZone() == CardZone.Hand
                 && (Game.Get().GetPhase().GetName() == Phase.Name.Main1 ||  Game.Get().GetPhase().GetName() == Phase.Name.Main2)
                 && !Game.Get().CostsBeingPaid()
                 && !Game.Get().GetStack().HasEffects();
+    }
+
+    @Override
+    public void Resolve() {
+        SetZone(CardZone.Graveyard);
+        GetOwner().GetGraveyard().add(this);
     }
 }
