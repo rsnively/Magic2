@@ -80,9 +80,9 @@ public class ControlPanelView extends View {
         g.drawString("P2 Cards in Graveyard: " + Game.Get().GetPlayer2().GetGraveyard().size(),GetRect().GetLeft(), GetRect().GetTop() + 280);
         g.drawString("P2 Cards in Exile: " + Game.Get().GetPlayer2().GetExile().size(), GetRect().GetLeft(), GetRect().GetTop() + 300);
 
-        g.setColor(Color.BLACK);
-        g.drawString(GetDialogString(Game.Get().GetPhase()), GetRect().GetLeft(), GetRect().GetCenterY());
-        g.drawString("Click when done", GetRect().GetLeft(), GetRect().GetCenterY() + 20); //todo buttons for yes/no/okay
+        Rect r = Rect.RectTopCenter(GetRect().GetCenter(), new Size(GetRect().GetWidth(), GetRect().GetHeight() / 2));
+        DrawStringInBounds(g, GetDialogString(Game.Get().GetPhase()), r, true);
+        g.drawString("Click when done", GetRect().GetLeft(), GetRect().GetCenterY() + 50); //todo buttons for yes/no/okay
 
         super.Render(g);
     }

@@ -68,10 +68,12 @@ public class CardView extends View {
         double imageWidth = GetRect().GetWidth() * 0.95;
         double imageHeight = imageWidth * CardView.WHRatio;
         double imageX = GetRect().GetLeft() + (GetRect().GetWidth() - imageWidth) / 2;
-        double imageY = GetRect().GetTop() + GetRect().GetHeight() * 0.05;
+        double imageY = GetRect().GetTop() + GetRect().GetHeight() * 0.1;
         g.drawImage(art, (int)imageX, (int)imageY, (int)imageWidth, (int)imageHeight,null);
 
-        g.drawString(GetTypelineString(), GetRect().GetLeft() + 5,(int) (imageY + imageHeight + 15));
+        Rect bounds = Rect.RectTopLeft(new Point(GetRect().GetLeft() + GetRect().GetWidth() * 0.05, imageY + imageHeight),
+                                          new Size (GetRect().GetWidth() * 0.95, 45));
+        DrawStringInBounds(g, GetTypelineString(), bounds, false);
 
         if (card.IsCreature())
             g.drawString(Integer.toString(card.GetPower()) + "/" + Integer.toString(card.GetToughness()), GetRect().GetRight() - 25, GetRect().GetBottom() - 20);

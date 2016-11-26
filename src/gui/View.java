@@ -77,6 +77,29 @@ public class View extends JPanel
         DrawStringCentered(g, s, GetRect());
     }
 
+    protected void DrawStringInBounds(Graphics2D g, String s, Rect bounds, boolean lineWrap) {
+        FontMetrics fm = g.getFontMetrics();
+        Rectangle2D unbounded = fm.getStringBounds(s, g);
+
+        double widthRatio = bounds.GetWidth() / unbounded.getWidth();
+        if (widthRatio < 1) {
+            boolean willLineWrap = lineWrap && bounds.GetHeight() > unbounded.getHeight() * 2;
+            int splitIndex = (int) (s.length() * widthRatio);
+            if (!willLineWrap) splitIndex -= 3;
+
+            String tail = s.substring(splitIndex);
+            s = s.substring(0, splitIndex);
+            if (!willLineWrap) s += "...";
+
+            if (willLineWrap) {
+                Rect newBounds = Rect.RectTopLeft(new Point(bounds.GetLeft(), bounds.GetTop() + unbounded.getHeight()),
+                                                  new Size(bounds.GetWidth(), bounds.GetHeight() - unbounded.getHeight()));
+                DrawStringInBounds(g, tail, newBounds, lineWrap);
+            }
+        }
+        g.drawString(s, bounds.GetLeft(), bounds.GetTop() + (int) unbounded.getHeight());
+    }
+
     protected ArrayList<View> GetSubviews() {
         return new ArrayList<>();
     }
