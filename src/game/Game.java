@@ -1,5 +1,7 @@
 package game;
 
+import ai.AIPlayer;
+
 import cards.*;
 
 import gui.MainView;
@@ -31,7 +33,8 @@ public class Game {
 
         p2 = new Player(false);
         ArrayList<Card> deck2 = new ArrayList<>();
-        for (int i = 0; i < 60; i++) {
+        for (int i = 0; i < 30; i++) {
+            deck2.add(new ISD_Swamp(p2));
             deck2.add(new ISD_WalkingCorpse(p2));
         }
         p2.SetDeck(deck2);
@@ -101,6 +104,10 @@ public class Game {
             p1.EmptyManaPool();
             p2.EmptyManaPool();
             phase.NextPhase();
+
+            if (!phase.GetActivePlayer() && (phase.GetName() == Phase.Name.Main1 || phase.GetName() == Phase.Name.Main2)) {
+                AIPlayer.MainPhase(p2);
+            }
         } while (!HasPhaseStop(phase));
         MainView.Update();
     }

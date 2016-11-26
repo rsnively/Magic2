@@ -30,6 +30,8 @@ public class ManaCost {
     }
 
     public boolean Has(Mana.Color color) { return mana.Has(color); }
+    public int Get(Mana.Color color) { return mana.Get(color); }
+    public int GetGeneric() { return generic; }
 
     public void Pay(Mana.Color color) {
         if (mana.Has(color))

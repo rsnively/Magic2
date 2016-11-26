@@ -102,4 +102,15 @@ public class Mana {
     public boolean Empty() { return this.Convert() == 0; }
 
     public static int Convert(String mana) { return (new Mana(mana)).Convert(); }
+
+    public boolean IsEnoughFor(Cost cost) {
+        if (!cost.TransferCostsPaid())
+            return false;
+        if (this.Convert() < cost.GetManaCost().Convert())
+            return false;
+        for (Color color : Color.values())
+            if (Get(color) < cost.GetManaCost().Get(color))
+                return false;
+        return true;
+    }
 }

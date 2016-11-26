@@ -78,11 +78,16 @@ public class Cost {
     }
 
     public boolean Paid() {
-        for (int i = 0; i < transferCosts.size(); i++)
+        return manaCost.Paid() && tapCost.isEmpty() && TransferCostsPaid();
+    }
+
+    public boolean TransferCostsPaid() {
+        for (int i = 0; i < transferCosts.size(); i++) {
             if (transferCosts.get(i).Paid()) {
                 transferCosts.remove(i);
                 i--;
             }
-        return manaCost.Paid() && tapCost.isEmpty() && transferCosts.isEmpty();
+        }
+        return transferCosts.isEmpty();
     }
 }
