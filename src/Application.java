@@ -13,7 +13,6 @@ public class Application extends JFrame
         setSize(WindowWidth, WindowHeight);
         setLocationRelativeTo(null);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
-        setResizable(false);
 
         MainView.Init(0, 0, WindowWidth, WindowHeight);
         add(MainView.Get());

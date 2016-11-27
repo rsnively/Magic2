@@ -26,6 +26,7 @@ public class View extends JPanel
 
     public void SetRect(Rect r) {
         this.rect = r;
+        MakeDirty();
     }
 
     protected void MakeDirty() {
