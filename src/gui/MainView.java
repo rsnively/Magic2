@@ -27,9 +27,13 @@ public class MainView extends View implements MouseListener {
 
     private MainView(int x, int y, int w, int h) {
         super(x, y, w, h);
-        gameView = new GameView(GetRect());
+        gameView = new GameView(GetGameViewRect());
 
         addMouseListener(this);
+    }
+
+    private Rect GetGameViewRect() {
+        return Rect.RectTopLeft(GetRect().GetTopLeft(), new Size(GetRect().GetWidth(), GetRect().GetHeight() - 29));
     }
 
     @Override
