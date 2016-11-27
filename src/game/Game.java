@@ -18,6 +18,10 @@ public class Game {
     private PhaseStops phaseStops;
 
     private Game() {
+        NewGame();
+    }
+
+    public void NewGame() {
         p1 = new Player(true);
         ArrayList<Card> deck1 = new ArrayList<>();
         for (int i = 0; i < 10; i++) {

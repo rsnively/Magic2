@@ -1,5 +1,7 @@
 package gui;
 
+import game.Game;
+
 import java.awt.Color;
 import java.awt.Graphics2D;
 
@@ -24,5 +26,10 @@ public class GameOverView extends View {
             g.setColor(Color.BLACK);
             DrawStringCentered(g, "You Lost");
         }
+    }
+
+    @Override
+    protected void Clicked(Click c) {
+        Game.Get().NewGame();
     }
 }
