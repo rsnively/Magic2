@@ -50,7 +50,7 @@ public class AIPlayer {
             if (remaining.Has(color)) {
                 for (Iterator<Card> it = p.GetPermanents().iterator(); it.hasNext(); ) {
                     Card card = it.next();
-                    if (card.Is(Card.Type.Land) && !card.IsTapped() && ((Land) card).ColorProduced() == color)
+                    if (card.Is(Card.Type.Land) && !card.IsTapped() && ((Land) card).ColorProduced() == color && !remaining.Paid())
                         card.Tap();
                 }
             }
