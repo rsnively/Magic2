@@ -31,6 +31,15 @@ public class AIPlayer {
         }
     }
 
+    public static void DeclareAttackers(Player p) {
+        for (Iterator<Card> it = p.GetPermanents().iterator(); it.hasNext(); ) {
+            Card c = it.next();
+            if (c.CanAttack() && AIDecision.Decide()) {
+                c.SetAttacking(true);
+            }
+        }
+    }
+
     public static boolean CanPlay(Player p, Card card) {
         if (!card.CanPlay())
             return false;
@@ -44,21 +53,25 @@ public class AIPlayer {
     }
 
     public static void PayForCard(Player p, Card c) {
-        ManaCost remaining = c.GetCost().GetManaCost();
+        ManaCost remaining = new ManaCost(c.GetCost().GetManaCost());
 
         for (Mana.Color color : Mana.Color.values()) {
             if (remaining.Has(color)) {
                 for (Iterator<Card> it = p.GetPermanents().iterator(); it.hasNext(); ) {
                     Card card = it.next();
-                    if (card.Is(Card.Type.Land) && !card.IsTapped() && ((Land) card).ColorProduced() == color && !remaining.Paid())
+                    if (card.Is(Card.Type.Land) && !card.IsTapped() && ((Land) card).ColorProduced() == color && remaining.Has(color)) {
                         card.Tap();
+                        remaining.Pay(color);
+                    }
                 }
             }
         }
         for (int i = 0; i < p.GetPermanents().size() && remaining.GetGeneric() > 0; i++) {
             Card card = p.GetPermanents().get(i);
-            if (card.Is(Card.Type.Land) && !card.IsTapped())
+            if (card.Is(Card.Type.Land) && !card.IsTapped()) {
                 card.Tap();
+                remaining.Pay(((Land) card).ColorProduced());
+            }
         }
     }
 }

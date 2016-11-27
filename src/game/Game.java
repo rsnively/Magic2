@@ -112,6 +112,9 @@ public class Game {
             if (!phase.GetActivePlayer() && (phase.GetName() == Phase.Name.Main1 || phase.GetName() == Phase.Name.Main2)) {
                 AIPlayer.MainPhase(p2);
             }
+            else if (!phase.GetActivePlayer() && phase.GetName() == Phase.Name.Attack) {
+                AIPlayer.DeclareAttackers(p2);
+            }
         } while (!HasPhaseStop(phase));
         MainView.Update();
     }
